@@ -2,12 +2,17 @@ package com.guilherme.cursomc;
 
 import java.util.Arrays;
 
+import com.guilherme.cursomc.domain.Address;
 import com.guilherme.cursomc.domain.Category;
 import com.guilherme.cursomc.domain.City;
+import com.guilherme.cursomc.domain.Client;
 import com.guilherme.cursomc.domain.Product;
 import com.guilherme.cursomc.domain.State;
+import com.guilherme.cursomc.domain.enums.ClientType;
+import com.guilherme.cursomc.repositories.AddressRepository;
 import com.guilherme.cursomc.repositories.CategoryRepository;
 import com.guilherme.cursomc.repositories.CityRepository;
+import com.guilherme.cursomc.repositories.ClientRepository;
 import com.guilherme.cursomc.repositories.ProductRepository;
 import com.guilherme.cursomc.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private StateRepository stateRepository;
+
+	@Autowired
+	private ClientRepository clientRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -65,6 +76,19 @@ public class CursomcApplication implements CommandLineRunner {
 		st2.getCities().addAll(Arrays.asList(c2, c3));
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "46657888805", ClientType.PESSOAFISICA);
+
+		cli1.getCellphones().addAll(Arrays.asList("564654654", "45465456"));
+
+		Address address1 = new Address(null, "address", "46", "casa", "xangrila", "13098-621", cli1, c1);
+		Address address2 = new Address(null, "addressdfsafs", "46", "casa", "xangrila", "13098-621", cli1, c2);
+
+		cli1.getAddresses().addAll(Arrays.asList(address1, address2));
+
+		clientRepository.save(cli1);
+		addressRepository.save(address1);
+		addressRepository.save(address2);
 	}
 
 }
