@@ -1,10 +1,7 @@
 package com.guilherme.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.guilherme.cursomc.domain.Category;
-import com.guilherme.cursomc.services.CategoryService;
+import com.guilherme.cursomc.domain.Client;
+import com.guilherme.cursomc.services.ClientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryResource {
+@RequestMapping(value = "/clients")
+public class ClientResource {
 
     @Autowired
-    CategoryService service;
+    private ClientService clientService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Integer id) {
-
-        Category cat = service.find(id);
-        return ResponseEntity.ok().body(cat);
+        Client client = clientService.find(id);
+        return ResponseEntity.ok().body(client);
     }
 
 }
