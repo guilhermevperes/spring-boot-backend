@@ -1,9 +1,10 @@
 package com.guilherme.cursomc.resources;
 
-import com.guilherme.cursomc.domain.Category;
-import com.guilherme.cursomc.services.CategoryService;
+import com.guilherme.cursomc.domain.OrderEntity;
+import com.guilherme.cursomc.services.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,17 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryResource {
+@RequestMapping(value = "/orders")
+public class OrderResource {
 
     @Autowired
-    CategoryService service;
+    OrderService orderService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Integer id) {
-
-        Category cat = service.find(id);
-        return ResponseEntity.ok().body(cat);
+        OrderEntity order = orderService.find((id));
+        return ResponseEntity.ok().body(order);
     }
 
 }
