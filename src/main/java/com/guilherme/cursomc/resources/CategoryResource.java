@@ -1,7 +1,10 @@
 package com.guilherme.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.guilherme.cursomc.DTO.CategoryDTO;
 import com.guilherme.cursomc.domain.Category;
 import com.guilherme.cursomc.services.CategoryService;
 
@@ -45,6 +48,13 @@ public class CategoryResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<Category> list = service.findAll();
+        List<CategoryDTO> listDTO = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
     }
 
 }

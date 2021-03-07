@@ -1,5 +1,6 @@
 package com.guilherme.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.guilherme.cursomc.domain.Category;
@@ -41,6 +42,10 @@ public class CategoryService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIngretyException("Não é possível excluir uma categoria que possui produtos.");
         }
+    }
+
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
 }
