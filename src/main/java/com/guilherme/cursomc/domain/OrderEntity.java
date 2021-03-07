@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -51,6 +52,14 @@ public class OrderEntity implements Serializable {
         this.instant = instant;
         this.client = client;
         this.address = address;
+    }
+
+    public double getTotalValue() {
+        double sum = 0.0;
+        for (OrderItem item : items) {
+            sum = sum + item.getSubTotal();
+        }
+        return sum;
     }
 
     public Integer getId() {
