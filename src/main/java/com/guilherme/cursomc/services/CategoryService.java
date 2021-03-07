@@ -13,12 +13,17 @@ import org.springframework.stereotype.Service;
 public class CategoryService {
 
     @Autowired
-    private CategoryRepository repo;
+    private CategoryRepository categoryRepository;
 
     public Category find(Integer id) throws ObjectNotFoundException {
-        Optional<Category> obj = repo.findById(id);
+        Optional<Category> obj = categoryRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Categoria não encontrada Id: " + id + ", Tipo: " + Category.class.getName()));
+    }
+
+    public Category insert(Category category) {
+        category.setId(null);
+        return categoryRepository.save(category);
     }
 
 }
