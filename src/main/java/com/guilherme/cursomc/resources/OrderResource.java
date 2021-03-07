@@ -19,7 +19,7 @@ public class OrderResource {
     OrderService orderService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id) {
+    public ResponseEntity<OrderEntity> find(@PathVariable Integer id) {
         OrderEntity order = orderService.find((id));
         return ResponseEntity.ok().body(order);
     }

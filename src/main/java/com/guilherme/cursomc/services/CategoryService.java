@@ -26,4 +26,10 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public Category update(Integer id, Category category) {
+        find(id);
+        category.setId(id);
+        return categoryRepository.save(category);
+    }
+
 }
