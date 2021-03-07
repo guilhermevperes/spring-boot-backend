@@ -31,7 +31,6 @@ public class ClientService {
     public Client update(Integer id, Client client) {
         Client newObj = find(id);
         updateData(newObj, client);
-        client.setId(id);
         return clientRepository.save(newObj);
     }
 
