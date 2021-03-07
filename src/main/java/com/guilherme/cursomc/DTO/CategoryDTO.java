@@ -8,6 +8,8 @@ import javax.validation.constraints.Min;
 
 import com.guilherme.cursomc.domain.Category;
 
+import org.hibernate.validator.constraints.Length;
+
 public class CategoryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -15,8 +17,9 @@ public class CategoryDTO implements Serializable {
     private Integer id;
 
     @NotEmpty(message = "Preenchimento obrigatório")
-    @Min(value = 5, message = "O tamanho deve ser entre 5 e 80 caracteres")
-    @Max(value = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
+    // @Min(value = 5, message = "O tamanho deve ser entre 5 e 80 caracteres")
+    // @Max(value = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
+    @Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
     private String name;
 
     public CategoryDTO() {
