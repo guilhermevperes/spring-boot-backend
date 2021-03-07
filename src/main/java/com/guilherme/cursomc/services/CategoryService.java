@@ -3,6 +3,7 @@ package com.guilherme.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.guilherme.cursomc.DTO.CategoryDTO;
 import com.guilherme.cursomc.domain.Category;
 import com.guilherme.cursomc.repositories.CategoryRepository;
 import com.guilherme.cursomc.services.exceptions.DataIngretyException;
@@ -54,6 +55,10 @@ public class CategoryService {
     public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return categoryRepository.findAll(pageRequest);
+    }
+
+    public Category fromDTO(CategoryDTO objDTO) {
+        return new Category(objDTO.getId(), objDTO.getName());
     }
 
 }
