@@ -2,6 +2,7 @@ package com.guilherme.cursomc.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.guilherme.cursomc.services.exceptions.DataIngretyException;
 import com.guilherme.cursomc.services.exceptions.ObjectNotFoundException;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,13 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
+
+    @ExceptionHandler(DataIngretyException.class)
+    public ResponseEntity<StandardError> dataIntegrity(DataIngretyException e, HttpServletRequest request) {
+        StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
+                System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
 }

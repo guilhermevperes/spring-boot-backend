@@ -5,9 +5,7 @@ import java.net.URI;
 import com.guilherme.cursomc.domain.Category;
 import com.guilherme.cursomc.services.CategoryService;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +37,13 @@ public class CategoryResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Category category) {
-        Category obj = service.update(id, category);
+        service.update(id, category);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
