@@ -27,6 +27,7 @@ import com.guilherme.cursomc.repositories.ProductRepository;
 import com.guilherme.cursomc.repositories.StateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -58,6 +59,9 @@ public class DBService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     public void instantiateTestDataBase() throws Exception {
         Category cat1 = new Category(null, "Informática");
@@ -115,7 +119,8 @@ public class DBService {
         stateRepository.saveAll(Arrays.asList(st1, st2));
         cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "46657888805", ClientType.PESSOAFISICA);
+        Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "46657888805", ClientType.PESSOAFISICA,
+                pe.encode("12456"));
 
         cli1.getCellphones().addAll(Arrays.asList("564654654", "45465456"));
 
