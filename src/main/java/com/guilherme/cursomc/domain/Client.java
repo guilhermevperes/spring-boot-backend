@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guilherme.cursomc.domain.enums.ClientType;
+import com.guilherme.cursomc.domain.enums.Perfil;
 
 @Entity
 public class Client implements Serializable {
@@ -43,11 +46,16 @@ public class Client implements Serializable {
     @CollectionTable(name = "Cellphone")
     private Set<String> cellphones = new HashSet<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "Perfils")
+    private Set<Integer> perfils = new HashSet<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<OrderEntity> orders = new ArrayList<>();
 
     public Client() {
+        addPerfil(Perfil.CLIENT);
     }
 
     public Client(Integer id, String name, String email, String cpfCnpj, ClientType type, String password) {
@@ -57,6 +65,7 @@ public class Client implements Serializable {
         this.cpfCnpj = cpfCnpj;
         this.type = type == null ? null : type.getCod();
         this.password = password;
+        addPerfil(Perfil.CLIENT);
     }
 
     public Integer getId() {
@@ -121,6 +130,14 @@ public class Client implements Serializable {
 
     public void setCellphones(Set<String> cellphones) {
         this.cellphones = cellphones;
+    }
+
+    public Set<Perfil> getPerfils() {
+        return perfils.stream().map(perfil -> Perfil.toEnum(perfil)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil) {
+        perfils.add(perfil.getCod());
     }
 
     public List<OrderEntity> getOrders() {

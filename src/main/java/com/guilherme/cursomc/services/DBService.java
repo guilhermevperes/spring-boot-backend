@@ -16,6 +16,7 @@ import com.guilherme.cursomc.domain.Product;
 import com.guilherme.cursomc.domain.State;
 import com.guilherme.cursomc.domain.enums.ClientType;
 import com.guilherme.cursomc.domain.enums.PaymentState;
+import com.guilherme.cursomc.domain.enums.Perfil;
 import com.guilherme.cursomc.repositories.AddressRepository;
 import com.guilherme.cursomc.repositories.CategoryRepository;
 import com.guilherme.cursomc.repositories.CityRepository;
@@ -121,17 +122,25 @@ public class DBService {
 
         Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "46657888805", ClientType.PESSOAFISICA,
                 pe.encode("12456"));
-
         cli1.getCellphones().addAll(Arrays.asList("564654654", "45465456"));
 
-        Address address1 = new Address(null, "address", "46", "casa", "xangrila", "13098-621", cli1, c1);
-        Address address2 = new Address(null, "addressdfsafs", "46", "casa", "xangrila", "13098-621", cli1, c2);
+        Client cli2 = new Client(null, "Ana Costa", "guilherme.vperes@gmail.com", "72842940865",
+                ClientType.PESSOAFISICA, pe.encode("12456"));
+        cli2.addPerfil(Perfil.ADMIN);
+        cli2.getCellphones().addAll(Arrays.asList("19981984964", "32570159"));
+
+        Address address1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
+        Address address2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38770212", cli1, c2);
+        Address address3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "13098621", cli2, c2);
 
         cli1.getAddresses().addAll(Arrays.asList(address1, address2));
+        cli2.getAddresses().addAll(Arrays.asList(address3));
 
         clientRepository.save(cli1);
+        clientRepository.save(cli2);
         addressRepository.save(address1);
         addressRepository.save(address2);
+        addressRepository.save(address3);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
